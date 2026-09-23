@@ -1,0 +1,33 @@
+pk_produit,nom_produit,nom_sous_produit
+1,Compte bancaire,Compte courant
+2,Compte bancaire,Compte épargne
+3,Compte bancaire,Compte jeune
+4,Compte bancaire,Compte professionnel
+5,Compte bancaire,Compte islamique
+6,Carte bancaire,Carte GIMAC
+7,Carte bancaire,Carte Visa Classic
+8,Carte bancaire,Carte Visa Gold
+9,Carte bancaire,Carte prépayée
+10,eFirst,Consultation de compte
+11,eFirst,Virement en ligne
+12,eFirst,Paiement de factures
+13,SARA Money,Dépôt (cash-in)
+14,SARA Money,Retrait (cash-out)
+15,SARA Money,Transfert P2P
+16,SARA Money,Paiement marchand
+17,SARA Banking,Consultation de solde
+18,SARA Banking,Virement
+19,SARA Banking,Recharge crédit
+20,SARA Banking,Paiement de factures
+21,SMS First,Alerte SMS
+22,SMS First,Solde par SMS
+23,SMS First,Mini-relevé SMS
+24,Crédit,Crédit consommation
+25,Crédit,Crédit immobilier
+26,Crédit,Crédit PME
+27,Crédit,Découvert autorisé
+28,Épargne et placement,Dépôt à terme
+29,Épargne et placement,Épargne programmée
+30,Transfert international,Western Union
+31,Transfert international,MoneyGram
+32,Transfert international,Virement SWIFT
