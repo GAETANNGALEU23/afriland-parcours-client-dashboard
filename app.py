@@ -34,8 +34,158 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-with open(os.path.join(APP_DIR, "assets", "style.css"), encoding="utf-8") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# Vérification défensive : si le dossier data/ n'a pas été poussé sur
+# GitHub (ou est incomplet), on affiche un message clair plutôt qu'un
+# traceback brut.
+_REQUIRED_DATA_FILES = [
+    "dim_client.csv", "dim_agence_operation.csv", "dim_canal.csv",
+    "dim_compte_client.csv", "dim_produit.csv", "dim_gestionnaire.csv",
+    "dim_statut_interaction.csv", "dim_type_transaction.csv",
+    "dim_date_interaction.csv", "interaction.csv",
+]
+_DATA_DIR = os.path.join(APP_DIR, "data")
+_missing = [f for f in _REQUIRED_DATA_FILES if not os.path.exists(os.path.join(_DATA_DIR, f))]
+if _missing:
+    st.error(
+        "Fichiers de données manquants dans le dépôt : "
+        + ", ".join(_missing)
+        + ". Vérifiez que le dossier `data/` a bien été poussé sur GitHub "
+        "(sur la page du dépôt, il doit apparaître au même niveau que `app.py`)."
+    )
+    st.stop()
+
+CUSTOM_CSS = """
+/* ===== Thème Afriland First Bank — Rouge / Noir / Blanc ===== */
+
+:root {
+    --afb-red: #C8102E;
+    --afb-red-dark: #8E0B20;
+    --afb-black: #111111;
+    --afb-white: #FFFFFF;
+    --afb-gray: #6B6B6B;
+    --afb-bg: #F5F5F5;
+}
+
+/* Fond général */
+.stApp {
+    background-color: var(--afb-bg);
+}
+
+/* Barre latérale */
+section[data-testid="stSidebar"] {
+    background-color: var(--afb-black);
+}
+section[data-testid="stSidebar"] * {
+    color: var(--afb-white) !important;
+}
+section[data-testid="stSidebar"] .stRadio label:hover {
+    color: var(--afb-red) !important;
+}
+section[data-testid="stSidebar"] hr {
+    border-color: #333333;
+}
+
+/* Boutons */
+.stButton > button {
+    background-color: var(--afb-red);
+    color: var(--afb-white);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    transition: background-color 0.15s ease;
+}
+.stButton > button:hover {
+    background-color: var(--afb-red-dark);
+    color: var(--afb-white);
+}
+
+/* Titres */
+h1, h2, h3 {
+    color: var(--afb-black);
+    font-weight: 700;
+}
+
+/* Bandeau d'en-tête */
+.afb-header {
+    background: linear-gradient(90deg, var(--afb-black) 0%, var(--afb-red) 100%);
+    padding: 1.1rem 1.6rem;
+    border-radius: 10px;
+    margin-bottom: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.afb-header h1 {
+    color: var(--afb-white) !important;
+    font-size: 1.5rem;
+    margin: 0;
+}
+.afb-header p {
+    color: #EDEDED;
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+/* Cartes KPI */
+.afb-kpi-card {
+    background-color: var(--afb-white);
+    border-left: 5px solid var(--afb-red);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    height: 100%;
+}
+.afb-kpi-label {
+    color: var(--afb-gray);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+}
+.afb-kpi-value {
+    color: var(--afb-black);
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+.afb-kpi-delta-up { color: #1E8E3E; font-size: 0.8rem; font-weight: 600; }
+.afb-kpi-delta-down { color: var(--afb-red); font-size: 0.8rem; font-weight: 600; }
+
+/* Cartes section */
+.afb-card {
+    background-color: var(--afb-white);
+    border-radius: 10px;
+    padding: 1.2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    margin-bottom: 1rem;
+}
+
+/* Badge de rôle utilisateur */
+.afb-badge {
+    background-color: var(--afb-red);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Masquer le menu et le footer par défaut de Streamlit */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* Onglets */
+.stTabs [data-baseweb="tab"] {
+    font-weight: 600;
+}
+.stTabs [aria-selected="true"] {
+    color: var(--afb-red) !important;
+    border-bottom-color: var(--afb-red) !important;
+}
+
+"""
+
+st.markdown(f"<style>{CUSTOM_CSS}</style>", unsafe_allow_html=True)
 
 px.defaults.color_discrete_sequence = PALETTE
 px.defaults.template = "plotly_white"
