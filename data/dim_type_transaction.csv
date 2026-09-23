@@ -1,0 +1,14 @@
+id_type_transaction,type_transaction
+1,Dépôt espèces
+2,Retrait espèces
+3,Virement émis
+4,Virement reçu
+5,Paiement de facture
+6,Recharge crédit téléphonique
+7,Paiement marchand
+8,Envoi d'argent
+9,Réception d'argent
+10,Consultation de solde
+11,Demande de relevé
+12,Souscription / ouverture
+13,Remboursement de crédit
